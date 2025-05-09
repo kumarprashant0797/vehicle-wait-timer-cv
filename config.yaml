@@ -1,0 +1,13 @@
+video:
+  source: "input.mp4"
+  output: "output.mp4"
+  display: true  # Set to false to hide video display
+
+model:
+  name: "yolov8n.pt"
+  confidence: 0.25
+  device: "cpu"  # or "cuda" for GPU
+
+classes:
+  # Only detect cars (class 2 in COCO dataset)
+  include: [2]
