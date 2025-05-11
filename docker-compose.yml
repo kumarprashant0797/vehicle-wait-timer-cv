@@ -1,0 +1,33 @@
+# Docker Compose version
+version: '3'
+
+# Define services (containers)
+services:
+  # Name of our service
+  vehicle-timer:
+    # Build from Dockerfile in current directory
+    build: .
+    
+    # Volume mappings (host:container)
+    volumes:
+      # Map input video file
+      - ./input.mp4:/app/input.mp4
+      
+      # Map configuration file
+      - ./config.yaml:/app/config.yaml
+      
+      # Map output text file for logging
+      - ./output.txt:/app/output.txt
+      
+      # Map YOLO model file
+      - ./yolov8n.pt:/app/yolov8n.pt
+      
+      # Map output video file
+      - ./output.mp4:/app/output.mp4
+    
+    # Environment variables (if needed)
+    environment:
+      - INPUT_PATH=/app/input.mp4
+      - OUTPUT_PATH=/app/output.mp4
+      - CONFIG_PATH=/app/config.yaml
+      - MODEL_PATH=/app/yolov8n.pt
