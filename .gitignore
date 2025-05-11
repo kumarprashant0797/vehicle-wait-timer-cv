@@ -174,3 +174,18 @@ cython_debug/
 .pypirc
 
 # video files
+
+# Model files
+*.pt
+
+# Video files
+*.mp4
+
+# MacOS system files
+.DS_Store
+
+# Output files
+output.txt
+
+# Documentation files
+*.pdf
