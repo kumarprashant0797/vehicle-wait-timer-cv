@@ -1,27 +1,26 @@
-# Use Python base image
-FROM python:3.9-slim
+FROM nvidia/cuda:11.8.0-base-ubuntu22.04
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    python3-opencv \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
 
-# Install minimal system dependencies required for OpenCV
-RUN apt-get update && apt-get install -y \
-    libgl1-mesa-glx \
-    libglib2.0-0 \
-    libsm6 \
-    libxext6 \
-    libxrender1 \
-    libx11-6 \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy requirements first to leverage Docker cache
+# Copy requirements first for better caching
 COPY requirements.txt .
+RUN pip3 install -r requirements.txt
 
-# Install Python dependencies
-RUN pip3 install --no-cache-dir -r requirements.txt
-
-# Copy the application
+# Copy application files
 COPY . .
 
-# Command to run the application
+# Create directories for mounted volumes
+RUN mkdir -p videos output
+
 CMD ["python3", "main.py"]
